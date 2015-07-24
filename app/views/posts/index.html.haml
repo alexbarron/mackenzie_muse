@@ -1,0 +1,33 @@
+- if user_signed_in?
+	%p#intro
+		Hello
+		= current_user.name
+		%br/
+		%span
+			Share your inspiration and see what others are inspired by.
+- else
+	%p#intro
+		What's your Muse?
+		%br/
+		%span
+			Share your inspiration and see what others are inspired by.
+#posts
+	- @posts.each do |post|
+		.post
+			.post_image
+				= link_to (image_tag post.image.url(:small)), post
+			.post_content
+				.title
+					%h2= link_to post.title, post
+				.data.clearfix
+					%p.username
+						Shared by
+						= post.user.name
+					%p.buttons
+						%span
+							%i.fa.fa-comments-o
+							= pluralize(post.comments.count, "Comment")
+						%span
+							%i.fa.fa-thumbs-o-up
+							= pluralize(post.get_likes.size, "Like")
+					
